@@ -28,28 +28,23 @@ function SpeakerRow({ speaker, duration }: { speaker: Speaker; duration: number 
       className="border-b-2 border-ink"
       style={{ backgroundColor: "#EDE8E1" }}
     >
-      <div className="flex gap-4 p-4">
-        {/* Left: speaker info + stats + bar */}
+      <div className="flex flex-col sm:flex-row gap-0 sm:gap-4 p-4">
+        {/* Top: speaker info + stats + bar */}
         <div className="flex-1 min-w-0">
           {/* Name row */}
           <div className="flex items-center gap-3 mb-3">
-            {/* Initials box */}
             <div
               className="flex items-center justify-center border-2 border-ink font-mono font-bold text-sm text-parchment flex-shrink-0"
-              style={{
-                width: 40,
-                height: 40,
-                backgroundColor: speaker.color,
-              }}
+              style={{ width: 40, height: 40, backgroundColor: speaker.color }}
             >
               {speaker.initials}
             </div>
-            <span className="font-sans text-lg text-ink">{speaker.name}</span>
+            <span className="font-sans text-base md:text-lg text-ink">{speaker.name}</span>
             <Badge badge={speaker.badge} />
           </div>
 
           {/* Stats grid */}
-          <div className="flex gap-3 mb-3 flex-wrap">
+          <div className="flex gap-2 mb-3 flex-wrap">
             <StatBox label="Off topic" value={Math.round(speaker.offTopicMinutes)} unit="MIN" />
             <StatBox label="Work-related" value={Math.round(speaker.workMinutes)} unit="MIN" />
             <StatBox label="Interruptions" value={speaker.interruptions} />
@@ -69,23 +64,23 @@ function SpeakerRow({ speaker, duration }: { speaker: Speaker; duration: number 
           />
         </div>
 
-        {/* Right: BS ratio panel */}
+        {/* BS ratio panel — inline on sm+, full-width strip on mobile */}
         <div
-          className="flex flex-col items-center justify-center flex-shrink-0"
+          className="flex sm:flex-col items-center justify-center sm:flex-shrink-0 mt-3 sm:mt-0 py-3 sm:py-0"
           style={{
             backgroundColor: "#0A0A0A",
-            width: 120,
-            padding: "12px 8px",
+            width: "auto",
+            padding: "10px 16px",
           }}
         >
           <span
-            className="font-sans text-3xl leading-none"
+            className="font-sans text-2xl sm:text-3xl leading-none mr-2 sm:mr-0"
             style={{ color: bsLabelColor }}
           >
             {speaker.bsRatio}%
           </span>
           <span
-            className="font-mono text-[9px] tracking-widest uppercase mt-1"
+            className="font-mono text-[9px] tracking-widest uppercase sm:mt-1"
             style={{ color: bsLabelColor }}
           >
             {bsLabel}
@@ -126,9 +121,9 @@ export function YappersTab({ speakers, duration, aiSummary }: YappersTabProps) {
   const mvp = speakers.find((s) => s.badge === "MEETING_MVP");
 
   return (
-    <div className="flex" style={{ minHeight: 400 }}>
-      {/* Left: speaker list */}
-      <div className="flex-1 border-r-2 border-ink">
+    <div className="flex flex-col md:flex-row" style={{ minHeight: 400 }}>
+      {/* Speaker list */}
+      <div className="flex-1 md:border-r-2 border-ink">
         {speakers.map((speaker) => (
           <SpeakerRow key={speaker.id} speaker={speaker} duration={duration} />
         ))}
@@ -154,13 +149,13 @@ export function YappersTab({ speakers, duration, aiSummary }: YappersTabProps) {
         )}
       </div>
 
-      {/* Right: AI summary + placeholder oval */}
+      {/* AI summary + placeholder oval — full width on mobile, 280px sidebar on desktop */}
       <div
-        className="flex flex-col justify-between"
-        style={{ width: 280, backgroundColor: "#EDE8E1" }}
+        className="flex flex-col justify-between border-t-2 md:border-t-0 border-ink w-full md:w-[280px] md:flex-shrink-0"
+        style={{ backgroundColor: "#EDE8E1" }}
       >
-        {/* Placeholder for 3D shape */}
-        <div className="flex items-center justify-center flex-1 p-6">
+        {/* Placeholder for 3D shape — hidden on mobile to save space */}
+        <div className="hidden md:flex items-center justify-center flex-1 p-6">
           <div
             style={{
               width: 200,

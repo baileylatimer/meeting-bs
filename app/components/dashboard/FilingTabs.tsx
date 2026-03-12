@@ -29,9 +29,9 @@ const TABS: Tab[] = [
 ];
 
 // How many px the top edge is inset on each side (controls the trapezoid angle)
-const INSET = 16; // px — larger = steeper angle
+const INSET = 12; // px — larger = steeper angle
 // How much tabs overlap each other at the bottom
-const OVERLAP = 20; // px
+const OVERLAP = 16; // px
 
 interface FilingTabsProps {
   activeTab: TabId;
@@ -71,22 +71,18 @@ export function FilingTabs({ activeTab, onTabChange }: FilingTabsProps) {
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
             style={{
-              // Overlap tabs at the bottom
               marginLeft: i === 0 ? 0 : -OVERLAP,
-              // Active tab sits on top of inactive ones
               zIndex: isActive ? 10 : 5 - i,
               position: "relative",
-              // Active tab extends 2px below to cover the content area's top border
               marginBottom: isActive ? "-2px" : "0",
-              // No native border/bg — we handle it with the double-layer inside
               background: "none",
               border: "none",
               padding: 0,
               cursor: "pointer",
               outline: "none",
-              // Tab dimensions
-              width: 148,
-              height: 48,
+              // Fluid tab width: smaller on mobile, full size on desktop
+              width: "clamp(80px, 22vw, 148px)",
+              height: 44,
               flexShrink: 0,
             }}
           >
@@ -124,8 +120,8 @@ export function FilingTabs({ activeTab, onTabChange }: FilingTabsProps) {
                 justifyContent: "center",
                 width: "100%",
                 height: "100%",
-                  fontFamily: "PP Neue Montreal, Neue Montreal, Helvetica Neue, Arial, sans-serif",
-                fontSize: "1rem",
+                fontFamily: "PP Neue Montreal, Neue Montreal, Helvetica Neue, Arial, sans-serif",
+                fontSize: "clamp(0.7rem, 2.5vw, 1rem)",
                 color: "#0A0A0A",
                 letterSpacing: "-0.01em",
                 userSelect: "none",

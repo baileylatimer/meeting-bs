@@ -41,18 +41,18 @@ export default function AnalyzeDashboard() {
 
   return (
     <div
-      className="min-h-screen py-8 px-6"
+      className="min-h-screen overflow-x-hidden py-4 px-3 md:py-8 md:px-6"
       style={{ backgroundColor: "#EDE8E1" }}
     >
       <div className="max-w-5xl mx-auto">
 
         {/* ── Top navigation (outside the card) ── */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-4 md:mb-6">
           <Link to="/" style={{ textDecoration: "none" }}>
             <h1
               style={{
                 fontFamily: "PP Neue Montreal, Neue Montreal, Helvetica Neue, Arial, sans-serif",
-                fontSize: "2.5rem",
+                fontSize: "clamp(1.5rem, 5vw, 2.5rem)",
                 color: "#0A0A0A",
                 letterSpacing: "-0.03em",
                 lineHeight: 1,
@@ -65,15 +65,16 @@ export default function AnalyzeDashboard() {
             to={`/receipt/${meeting.id}`}
             style={{
               fontFamily: "IBM Plex Mono, Courier New, monospace",
-              fontSize: "0.7rem",
-              letterSpacing: "0.12em",
+              fontSize: "0.65rem",
+              letterSpacing: "0.1em",
               textTransform: "uppercase",
               color: "#0A0A0A",
               border: "2px solid #0A0A0A",
-              padding: "8px 16px",
+              padding: "6px 10px",
               textDecoration: "none",
               display: "inline-block",
               transition: "background-color 0.15s, color 0.15s",
+              whiteSpace: "nowrap",
             }}
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLAnchorElement).style.backgroundColor = "#0A0A0A";
@@ -92,8 +93,9 @@ export default function AnalyzeDashboard() {
         <div
           style={{
             border: "2px solid #0A0A0A",
-            boxShadow: "8px 8px 0 #0A0A0A",
+            boxShadow: "4px 4px 0 #0A0A0A",
           }}
+          className="md:[box-shadow:8px_8px_0_#0A0A0A]"
         >
           {/* Verdict banner */}
           <VerdictRow verdict={meeting.verdict} />
