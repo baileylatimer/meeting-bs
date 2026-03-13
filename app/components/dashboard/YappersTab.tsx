@@ -1,11 +1,18 @@
+import { lazy, Suspense } from "react";
 import type { Speaker } from "~/types/meeting";
 import { Badge } from "~/components/shared/Badge";
 import { RetroProgressBar } from "~/components/shared/RetroProgressBar";
+
+// Lazy-load Three.js visualization (client-only, avoids SSR)
+const MeetingEntropy = lazy(() =>
+  import("~/components/shared/MeetingEntropy").then((m) => ({ default: m.MeetingEntropy }))
+);
 
 interface YappersTabProps {
   speakers: Speaker[];
   duration: number;
   aiSummary: string;
+  bsScore: number;
 }
 
 function SpeakerRow({ speaker, duration }: { speaker: Speaker; duration: number }) {
@@ -116,7 +123,7 @@ function StatBox({
   );
 }
 
-export function YappersTab({ speakers, duration, aiSummary }: YappersTabProps) {
+export function YappersTab({ speakers, duration, aiSummary, bsScore }: YappersTabProps) {
   // Find MVP
   const mvp = speakers.find((s) => s.badge === "MEETING_MVP");
 
@@ -149,28 +156,23 @@ export function YappersTab({ speakers, duration, aiSummary }: YappersTabProps) {
         )}
       </div>
 
-      {/* AI summary + placeholder oval — full width on mobile, 280px sidebar on desktop */}
+      {/* AI summary + particle viz — full width on mobile, 280px sidebar on desktop */}
       <div
         className="flex flex-col justify-between border-t-2 md:border-t-0 border-ink w-full md:w-[280px] md:flex-shrink-0"
-        style={{ backgroundColor: "#EDE8E1" }}
+        style={{ backgroundColor: "#2A2A2A" }}
       >
-        {/* Placeholder for 3D shape — hidden on mobile to save space */}
-        <div className="hidden md:flex items-center justify-center flex-1 p-6">
-          <div
-            style={{
-              width: 200,
-              height: 200,
-              borderRadius: "50%",
-              backgroundColor: "#C8C3BC",
-            }}
-          />
+        {/* Meeting Entropy particle visualization — hidden on mobile */}
+        <div className="hidden md:block flex-1" style={{ minHeight: 280 }}>
+          <Suspense fallback={<div style={{ width: "100%", height: "100%", backgroundColor: "#2A2A2A" }} />}>
+            <MeetingEntropy bsScore={bsScore} />
+          </Suspense>
         </div>
 
         {/* AI summary blurb */}
         <div className="p-5 border-t-2 border-ink">
-          <p className="font-sans text-sm text-ink leading-relaxed">
+          <p className="font-sans text-sm leading-relaxed" style={{ color: "#EDE8E1" }}>
             <span
-              style={{ backgroundColor: "#FF6B6B", padding: "0 4px" }}
+              style={{ backgroundColor: "#FF6B6B", color: "#0A0A0A", padding: "0 4px" }}
             >
               {aiSummary.split(" ")[0]} {aiSummary.split(" ")[1]}
             </span>{" "}

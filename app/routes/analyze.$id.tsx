@@ -140,6 +140,7 @@ export default function AnalyzeDashboard() {
                   speakers={meeting.speakers}
                   duration={meeting.duration}
                   aiSummary={meeting.aiSummary}
+                  bsScore={meeting.bsScore}
                 />
               )}
               {activeTab === "tangents" && (
