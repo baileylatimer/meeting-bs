@@ -142,8 +142,19 @@ export default function AnalyzeDashboard() {
                   aiSummary={meeting.aiSummary}
                 />
               )}
-              {activeTab === "tangents" && <TangentsTab />}
-              {activeTab === "buzzwords" && <BuzzwordsTab />}
+              {activeTab === "tangents" && (
+                <TangentsTab
+                  tangents={meeting.tangents}
+                  speakers={meeting.speakers}
+                />
+              )}
+              {activeTab === "buzzwords" && (
+                <BuzzwordsTab
+                  buzzwords={meeting.buzzwords}
+                  buzzwordsPerMinute={meeting.buzzwordsPerMinute}
+                  duration={meeting.duration}
+                />
+              )}
               {activeTab === "trends" && <TrendsTab />}
             </div>
           </div>
