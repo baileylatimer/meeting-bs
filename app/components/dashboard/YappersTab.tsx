@@ -159,11 +159,11 @@ export function YappersTab({ speakers, duration, aiSummary, bsScore }: YappersTa
       {/* AI summary + particle viz — full width on mobile, 280px sidebar on desktop */}
       <div
         className="flex flex-col justify-between border-t-2 md:border-t-0 border-ink w-full md:w-[280px] md:flex-shrink-0"
-        style={{ backgroundColor: "#2A2A2A" }}
+        style={{ backgroundColor: "#0A0A0A" }}
       >
         {/* Meeting Entropy particle visualization — hidden on mobile */}
         <div className="hidden md:block flex-1" style={{ minHeight: 280 }}>
-          <Suspense fallback={<div style={{ width: "100%", height: "100%", backgroundColor: "#2A2A2A" }} />}>
+          <Suspense fallback={<div style={{ width: "100%", height: "100%", backgroundColor: "#0A0A0A" }} />}>
             <MeetingEntropy bsScore={bsScore} />
           </Suspense>
         </div>
